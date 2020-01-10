@@ -69,7 +69,9 @@ function songLyrics(song) {
     html +=
       '<div class="copy-lyrics" id="copy-lyrics" data-clipboard-target="#thelyrics">Copy the lyrics <span id="copy-ok"></span></div>';
     html +=
-      '<div id="thelyrics">' + data.lyrics.replace(/\n/g, "<br />") + "</div>";
+      '<div id="thelyrics" class="lyrics">' +
+      data.lyrics.replace(/\n/g, "<br />") +
+      "</div>";
     lyricsDiv.html(html);
     lyricsDiv.slideDown();
     var copyl = new Clipboard("#copy-lyrics");
