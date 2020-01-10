@@ -67,11 +67,11 @@ function songLyrics(song) {
   $.getJSON(apiUrl + "/v1/" + song.artist + "/" + song.title, function(data) {
     var html = '<h3 class="lyrics-title">' + song.display + "</h3>";
     html +=
-      '<div class="copy-lyrics" id="copy-lyrics" data-clipboard-target="#thelyrics">Copy the lyrics <span id="copy-ok"></span></div>';
-    html +=
-      '<div id="thelyrics" class="lyrics">' +
+      '<div id="thelyrics" class="thelyrics">' +
       data.lyrics.replace(/\n/g, "<br />") +
       "</div>";
+    html +=
+      '<div class="copy-lyrics" id="copy-lyrics" data-clipboard-target="#thelyrics">Copy the lyrics <span id="copy-ok"></span></div>';
     lyricsDiv.html(html);
     lyricsDiv.slideDown();
     var copyl = new Clipboard("#copy-lyrics");

@@ -16,39 +16,39 @@
 
   <body>
     <div class="container">
-      <div class="title">
-        <h1 class="title-name">
-          <a href="https://ludacris.netlify.com">ludacris</a>
-        </h1>
+      <div class="header">
+        <div class="title">
+          <h1 class="title-name">
+            <a href="https://ludacris.netlify.com">ludacris</a>
+          </h1>
+          <a
+            target="_blank"
+            title="The code is open-source"
+            href="https://github.com/liyasthomas/ludacris"
+            >GitHub</a
+          >
+        </div>
+        <div class="search">
+          <input
+            type="search"
+            name="song"
+            class="search-song"
+            autofocus="autofocus"
+            placeholder="type the song you want the lyrics"
+            id="search-input"
+          />
+        </div>
       </div>
-
-      <div class="search">
-        <input
-          type="search"
-          name="song"
-          class="search-song"
-          autofocus="autofocus"
-          placeholder="Type the song you want the lyrics"
-          id="search-input"
-        />
-        <ul class="results" id="results"></ul>
-      </div>
+      <ul class="results" id="results"></ul>
       <div class="lyrics" id="lyrics"></div>
-    </div>
-
-    <div class="credits">
-      <a
-        target="_blank"
-        title="The code is open-source"
-        href="https://github.com/liyasthomas/ludacris"
-        >Github</a
-      >
-      <a
-        target="_blank"
-        title="Made by NTag"
-        href="https://github.com/liyasthomas"
-        >Made by Liyas Thomas</a
-      >
+      <div class="credits">
+        <a
+          target="_blank"
+          title="Made by Liyas Thomas"
+          href="https://github.com/liyasthomas"
+          >made by Liyas Thomas</a
+        >
+      </div>
     </div>
 
     <script

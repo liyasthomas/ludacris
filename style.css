@@ -1,71 +1,126 @@
 :root {
-  --bg-color: #112;
-  --fg-color: #fff;
-  --ac-color: #0fb;
+  --bg-color: #fff;
+  --fg-color: #112;
+  --ac-color: #112;
 }
+
+* {
+  box-sizing: border-box;
+  outline: 0;
+  border: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fg-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-color);
+}
+
+::placeholder {
+  color: #aaa;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+}
+
+::selection {
+  background: var(--fg-color);
+  color: var(--bg-color);
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 html {
-  height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   background-color: var(--bg-color);
-  background-image: url();
   color: var(--fg-color);
-  margin: 0px;
-  padding: 0px;
-  font-family: "Poppins", sans-serif;
   font-weight: 400;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.2s;
+  animation: fadein 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 a {
+  color: var(--ac-color);
   text-decoration: none;
+  font-weight: 800;
 }
 
 a:hover {
   color: var(--ac-color);
+  transition: all 0.2s;
 }
 
 .container {
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
 }
 
 .title {
-  margin-bottom: 30px;
-  padding: 20px;
+  display: flex;
+  flex: 1;
+  margin: 16px 16px 0;
   color: var(--ac-color);
-  text-align: center;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title-name {
-  font-size: 21vw;
   font-weight: 800;
   line-height: 1;
   margin: 0;
 }
 
-.title-name a {
-  color: var(--ac-color);
-}
-
-.title-name a:hover {
-  color: var(--ac-color);
-}
-
 .search {
-  margin: 20px;
-  padding: 20px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .search-song {
-  width: 100%;
+  display: flex;
+  flex: 1;
   border: none;
-  color: #112;
-  font-size: 32px;
+  color: var(--fg-color);
+  font-size: 18px;
   font-family: "Poppins", sans-serif;
   font-weight: 800;
-  padding: 32px 64px;
-  border-radius: 120px;
+  padding: 16px 0;
+  margin: 0 16px;
   outline: none;
+  text-overflow: ellipsis;
+  border-bottom: 2px solid var(--fg-color);
 }
 
 .search-song:focus {
@@ -73,19 +128,20 @@ a:hover {
 }
 
 .results {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   margin: 0px;
   padding: 0px;
   list-style-type: none;
-  padding-top: 10px;
-  margin-bottom: -20px;
 }
 
 .result {
-  border-bottom: 1px solid var(--ac-color);
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  border-bottom: 1px solid #ddd;
+  padding: 16px 0;
+  margin: 0 32px;
   cursor: pointer;
 }
 
@@ -98,14 +154,13 @@ a:hover {
 }
 
 .lyrics {
-  margin: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 32px 32px;
 }
 
 .lyrics-title {
-  text-align: center;
 }
 
 .copy-lyrics {
@@ -116,19 +171,14 @@ a:hover {
 }
 
 .credits {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-weight: 800;
-  text-transform: uppercase;
-  width: 100%;
-  text-align: center;
+  padding: 16px 32px;
 }
 
 .credits a {
   color: #aaa;
-  display: inline-block;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.lyrics {
-  font-size: 32px;
+  padding: 8px 0;
 }
