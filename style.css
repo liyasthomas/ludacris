@@ -3,13 +3,12 @@ html {
 }
 
 body {
-  background-color: #333;
-  color: white;
+  background-color: #111122;
+  color: #fff;
   margin: 0px;
   padding: 0px;
-  font-family: "Open Sans", sans-serif;
-  min-height: 100%;
-  position: relative;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
 }
 
 a {
@@ -17,42 +16,32 @@ a {
 }
 
 a:hover {
-  color: #bf360c;
+  color: #00ffbb;
 }
 
 .container {
-  max-width: 900px;
-  margin: 0 auto;
+  padding: 0;
 }
 
 .title {
-  text-align: center;
   margin-bottom: 30px;
-  font-family: "Bungee Shade", cursive;
   padding: 20px;
-  color: #ff5722;
+  color: #00ffbb;
 }
 
 .title-name {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  font-size: 21vw;
+  font-weight: 800;
+  line-height: 1;
+  margin: 0;
 }
 
 .title-name a {
-  color: #ff5722;
+  color: #00ffbb;
 }
 
 .title-name a:hover {
-  color: #bf360c;
-}
-
-.title-legend {
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  font-size: 18px;
-  font-style: italic;
-  letter-spacing: 3px;
+  color: #00ffbb;
 }
 
 .search {
@@ -62,15 +51,12 @@ a:hover {
 
 .search-song {
   width: 100%;
-  background: none;
-  border-top: none;
-  border-left: none;
-  border-bottom: 1px solid #ff8a65;
-  color: white;
-  height: 30px;
-  border-right: none;
-  font-size: 16px;
-  font-family: "Open Sans", sans-serif;
+  border: none;
+  color: #112;
+  font-size: 32px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  padding: 32px;
 }
 
 .search-song:focus {
@@ -86,7 +72,7 @@ a:hover {
 }
 
 .result {
-  border-bottom: 1px solid #ff8a65;
+  border-bottom: 1px solid #00ffbb;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
@@ -104,7 +90,6 @@ a:hover {
 
 .lyrics {
   margin: 20px;
-  font-family: "Crimson Text", serif;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 70px;
@@ -117,8 +102,7 @@ a:hover {
 .copy-lyrics {
   text-align: right;
   cursor: pointer;
-  font-family: "Open Sans", sans-serif;
-  color: #ff5722;
+  color: #00ffbb;
   text-transform: uppercase;
 }
 
