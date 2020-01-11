@@ -1,13 +1,10 @@
-"use strict";
-
-var searchInput = $("#search-input");
-var results = $("#results");
-var apiUrl = "https://api.lyrics.ovh";
-// var apiUrl = 'http://localhost:8080';
-var lyricsDiv = $("#lyrics");
-var timeoutSuggest;
+const searchInput = $("#search-input");
+const results = $("#results");
+const apiUrl = "https://api.lyrics.ovh";
+const lyricsDiv = $("#lyrics");
+let timeoutSuggest;
 lyricsDiv.hide();
-searchInput.on("input", function() {
+searchInput.on("input", () => {
   if (timeoutSuggest) {
     clearTimeout(timeoutSuggest);
   }
@@ -19,41 +16,40 @@ function removeResults() {
 }
 
 function suggestions() {
-  var term = searchInput.val();
+  const term = searchInput.val();
   if (!term) {
     removeResults();
     return;
   }
-  console.log("Search suggestions for", term);
-  $.getJSON(apiUrl + "/suggest/" + term, function(data) {
+  $.getJSON(`${apiUrl}/suggest/${term}`, data => {
     removeResults();
-    var finalResults = [];
-    var seenResults = [];
-    data.data.forEach(function(result) {
+    const finalResults = [];
+    const seenResults = [];
+    data.data.forEach(({ title, artist }) => {
       if (seenResults.length >= 5) {
         return;
       }
-      var t = result.title + " - " + result.artist.name;
-      if (seenResults.indexOf(t) >= 0) {
+      const t = `${title} - ${artist.name}`;
+      if (seenResults.includes(t)) {
         return;
       }
       seenResults.push(t);
       finalResults.push({
         display: t,
-        artist: result.artist.name,
-        title: result.title
+        artist: artist.name,
+        title: title
       });
     });
 
-    var l = finalResults.length;
-    finalResults.forEach(function(result, i) {
-      var c = "result";
+    const l = finalResults.length;
+    finalResults.forEach((result, i) => {
+      let c = "result";
       if (i == l - 1) {
         c += " result-last";
       }
-      var e = $('<li class="' + c + '">' + result.display + "</li>");
+      const e = $(`<li class="${c}">${result.display}</li>`);
       results.append(e);
-      e.click(function() {
+      e.click(() => {
         songLyrics(result);
       });
     });
@@ -61,44 +57,22 @@ function suggestions() {
 }
 
 function songLyrics(song) {
-  console.log("Search lyrics for", song);
   removeResults();
   lyricsDiv.slideUp();
-  $.getJSON(apiUrl + "/v1/" + song.artist + "/" + song.title, function(data) {
-    var html = '<h3 class="lyrics-title">' + song.display + "</h3>";
-    html +=
-      '<div id="thelyrics" class="thelyrics">' +
-      data.lyrics.replace(/\n/g, "<br />") +
-      "</div>";
+  $.getJSON(`${apiUrl}/v1/${song.artist}/${song.title}`, ({ lyrics }) => {
+    let html = `<h3 class="lyrics-title">${song.display}</h3>`;
+    html += `<div id="thelyrics" class="thelyrics">${lyrics.replace(
+      /\n/g,
+      "<br />"
+    )}</div>`;
     html +=
       '<div class="copy-lyrics" id="copy-lyrics" data-clipboard-target="#thelyrics">Copy the lyrics <span id="copy-ok"></span></div>';
     lyricsDiv.html(html);
     lyricsDiv.slideDown();
-    var copyl = new Clipboard("#copy-lyrics");
-    copyl.on("success", function(e) {
+    const copyl = new Clipboard("#copy-lyrics");
+    copyl.on("success", e => {
       e.clearSelection();
       $("#copy-ok").text(" - Done :-)");
     });
   });
-}
-
-// Hide the link for Chrome extension if not using Chrome
-var isChromium = window.chrome,
-  winNav = window.navigator,
-  vendorName = winNav.vendor,
-  isOpera = winNav.userAgent.indexOf("OPR") > -1,
-  isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-  isIOSChrome = winNav.userAgent.match("CriOS");
-
-if (
-  !isIOSChrome &&
-  !(
-    isChromium !== null &&
-    isChromium !== undefined &&
-    vendorName === "Google Inc." &&
-    isOpera == false &&
-    isIEedge == false
-  )
-) {
-  $("#dl-chrome-ext").hide();
 }

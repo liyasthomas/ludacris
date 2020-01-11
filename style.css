@@ -120,11 +120,11 @@ a:hover {
   margin: 0 16px;
   outline: none;
   text-overflow: ellipsis;
-  border-bottom: 2px solid var(--fg-color);
+  border-bottom: 2px solid #aaa;
 }
 
 .search-song:focus {
-  /* box-shadow: 0 0 32px var(--ac-color); */
+  border-bottom: 2px solid var(--fg-color);
 }
 
 .results {
@@ -137,6 +137,7 @@ a:hover {
 }
 
 .result {
+  color: #aaa;
   font-family: "Poppins", sans-serif;
   font-weight: 800;
   border-bottom: 1px solid #ddd;
@@ -146,7 +147,7 @@ a:hover {
 }
 
 .result:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--fg-color);
 }
 
 .result.result-last {
