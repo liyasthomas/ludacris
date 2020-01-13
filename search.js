@@ -10,25 +10,24 @@ searchInput.addEventListener("input", () => {
   timeoutSuggest = setTimeout(suggestions, 300);
 });
 
-function removeResults() {
+removeResults = () => {
   results.innerHTML = "";
-}
+};
 
-function suggestions() {
+suggestions = () => {
   const term = searchInput.value;
   if (!term) {
     removeResults();
     return;
   }
-  const request = new XMLHttpRequest();
-  request.open("GET", `${apiUrl}/suggest/${term}`, true);
-  request.onload = function() {
-    if (this.status >= 200 && this.status < 400) {
-      const data = JSON.parse(this.response);
+  results.innerHTML = "Loading...";
+  fetch(`${apiUrl}/suggest/${term}`)
+    .then(response => response.json())
+    .then(({ data }) => {
       removeResults();
       const finalResults = [];
       const seenResults = [];
-      data.data.forEach(({ title, artist }) => {
+      data.forEach(({ title, artist }) => {
         if (seenResults.length >= 5) {
           return;
         }
@@ -56,35 +55,26 @@ function suggestions() {
           songLyrics(result);
         });
       });
-    } else {
-      // We reached our target server, but it returned an error
-    }
-  };
-  request.onerror = () => {
-    // There was a connection error of some sort
-  };
-  request.send();
-}
+    })
+    .catch(error => {
+      results.innerHTML = error;
+    });
+};
 
-function songLyrics({ artist, title, display }) {
+songLyrics = ({ artist, title, display }) => {
   removeResults();
-  const request = new XMLHttpRequest();
-  request.open("GET", `${apiUrl}/v1/${artist}/${title}`, true);
-  request.onload = function() {
-    if (this.status >= 200 && this.status < 400) {
-      const { lyrics } = JSON.parse(this.response);
+  lyricsDiv.innerHTML = "Loading...";
+  fetch(`${apiUrl}/v1/${artist}/${title}`)
+    .then(response => response.json())
+    .then(({ lyrics }) => {
       let html = `<h3 class="lyrics-title">${display}</h3>`;
       html += `<div id="thelyrics" class="thelyrics">${lyrics.replace(
         /\n/g,
         "<br />"
       )}</div>`;
       lyricsDiv.innerHTML = html;
-    } else {
-      // We reached our target server, but it returned an error
-    }
-  };
-  request.onerror = () => {
-    // There was a connection error of some sort
-  };
-  request.send();
-}
+    })
+    .catch(error => {
+      lyricsDiv.innerHTML = error;
+    });
+};
