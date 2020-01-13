@@ -12,6 +12,8 @@
 }
 
 ::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
   background: transparent;
 }
 
@@ -162,13 +164,6 @@ a:hover {
 }
 
 .lyrics-title {
-}
-
-.copy-lyrics {
-  text-align: right;
-  cursor: pointer;
-  color: var(--ac-color);
-  text-transform: uppercase;
 }
 
 .credits {

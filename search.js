@@ -1,10 +1,9 @@
-const searchInput = $("#search-input");
-const results = $("#results");
+const searchInput = document.getElementById("search-input");
+const results = document.getElementById("results");
 const apiUrl = "https://api.lyrics.ovh";
-const lyricsDiv = $("#lyrics");
+const lyricsDiv = document.getElementById("lyrics");
 let timeoutSuggest;
-lyricsDiv.hide();
-searchInput.on("input", () => {
+searchInput.addEventListener("input", () => {
   if (timeoutSuggest) {
     clearTimeout(timeoutSuggest);
   }
@@ -12,67 +11,80 @@ searchInput.on("input", () => {
 });
 
 function removeResults() {
-  $(".result").remove();
+  results.innerHTML = "";
 }
 
 function suggestions() {
-  const term = searchInput.val();
+  const term = searchInput.value;
   if (!term) {
     removeResults();
     return;
   }
-  $.getJSON(`${apiUrl}/suggest/${term}`, data => {
-    removeResults();
-    const finalResults = [];
-    const seenResults = [];
-    data.data.forEach(({ title, artist }) => {
-      if (seenResults.length >= 5) {
-        return;
-      }
-      const t = `${title} - ${artist.name}`;
-      if (seenResults.includes(t)) {
-        return;
-      }
-      seenResults.push(t);
-      finalResults.push({
-        display: t,
-        artist: artist.name,
-        title: title
+  const request = new XMLHttpRequest();
+  request.open("GET", `${apiUrl}/suggest/${term}`, true);
+  request.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+      const data = JSON.parse(this.response);
+      removeResults();
+      const finalResults = [];
+      const seenResults = [];
+      data.data.forEach(({ title, artist }) => {
+        if (seenResults.length >= 5) {
+          return;
+        }
+        const t = `${title} - ${artist.name}`;
+        if (seenResults.includes(t)) {
+          return;
+        }
+        seenResults.push(t);
+        finalResults.push({
+          display: t,
+          artist: artist.name,
+          title
+        });
       });
-    });
-
-    const l = finalResults.length;
-    finalResults.forEach((result, i) => {
-      let c = "result";
-      if (i == l - 1) {
-        c += " result-last";
-      }
-      const e = $(`<li class="${c}">${result.display}</li>`);
-      results.append(e);
-      e.click(() => {
-        songLyrics(result);
+      const l = finalResults.length;
+      finalResults.forEach((result, i) => {
+        let c = "result";
+        if (i == l - 1) {
+          c += " result-last";
+        }
+        const e = document.createElement("li");
+        e.innerHTML = `<li class="${c}">${result.display}</li>`;
+        results.appendChild(e);
+        e.addEventListener("click", () => {
+          songLyrics(result);
+        });
       });
-    });
-  });
+    } else {
+      // We reached our target server, but it returned an error
+    }
+  };
+  request.onerror = () => {
+    // There was a connection error of some sort
+  };
+  request.send();
 }
 
-function songLyrics(song) {
+function songLyrics({ artist, title, display }) {
   removeResults();
-  lyricsDiv.slideUp();
-  $.getJSON(`${apiUrl}/v1/${song.artist}/${song.title}`, ({ lyrics }) => {
-    let html = `<h3 class="lyrics-title">${song.display}</h3>`;
-    html += `<div id="thelyrics" class="thelyrics">${lyrics.replace(
-      /\n/g,
-      "<br />"
-    )}</div>`;
-    html +=
-      '<div class="copy-lyrics" id="copy-lyrics" data-clipboard-target="#thelyrics">Copy the lyrics <span id="copy-ok"></span></div>';
-    lyricsDiv.html(html);
-    lyricsDiv.slideDown();
-    const copyl = new Clipboard("#copy-lyrics");
-    copyl.on("success", e => {
-      e.clearSelection();
-      $("#copy-ok").text(" - Done :-)");
-    });
-  });
+  const request = new XMLHttpRequest();
+  request.open("GET", `${apiUrl}/v1/${artist}/${title}`, true);
+  request.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+      const { lyrics } = JSON.parse(this.response);
+      let html = `<h3 class="lyrics-title">${display}</h3>`;
+      html += `<div id="thelyrics" class="thelyrics">${lyrics.replace(
+        /\n/g,
+        "<br />"
+      )}</div>`;
+      lyricsDiv.innerHTML = html;
+    } else {
+      // We reached our target server, but it returned an error
+    }
+  };
+  request.onerror = () => {
+    // There was a connection error of some sort
+  };
+  request.send();
 }
