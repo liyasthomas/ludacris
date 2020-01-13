@@ -28,7 +28,7 @@ suggestions = () => {
       const finalResults = [];
       const seenResults = [];
       data.forEach(({ title, artist }) => {
-        if (seenResults.length >= 5) {
+        if (seenResults.length >= 10) {
           return;
         }
         const t = `${title} - ${artist.name}`;
@@ -43,18 +43,22 @@ suggestions = () => {
         });
       });
       const l = finalResults.length;
-      finalResults.forEach((result, i) => {
-        let c = "result";
-        if (i == l - 1) {
-          c += " result-last";
-        }
-        const e = document.createElement("li");
-        e.innerHTML = `<li class="${c}">${result.display}</li>`;
-        results.appendChild(e);
-        e.addEventListener("click", () => {
-          songLyrics(result);
+      if (l) {
+        finalResults.forEach((result, i) => {
+          let c = "result";
+          if (i == l - 1) {
+            c += " result-last";
+          }
+          const e = document.createElement("li");
+          e.innerHTML = `<li class="${c}">${result.display}</li>`;
+          results.appendChild(e);
+          e.addEventListener("click", () => {
+            songLyrics(result);
+          });
         });
-      });
+      } else {
+        results.innerHTML = "No results";
+      }
     })
     .catch(error => {
       results.innerHTML = error;
@@ -75,6 +79,6 @@ songLyrics = ({ artist, title, display }) => {
       lyricsDiv.innerHTML = html;
     })
     .catch(error => {
-      lyricsDiv.innerHTML = error;
+      lyricsDiv.innerHTML = "Not found";
     });
 };
