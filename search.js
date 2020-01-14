@@ -27,7 +27,7 @@ suggestions = () => {
       removeResults();
       const finalResults = [];
       const seenResults = [];
-      data.forEach(({ title, artist }) => {
+      data.forEach(({ title, artist, album }) => {
         if (seenResults.length >= 10) {
           return;
         }
@@ -37,9 +37,10 @@ suggestions = () => {
         }
         seenResults.push(t);
         finalResults.push({
-          display: t,
+          title,
           artist: artist.name,
-          title
+          album: album.title,
+          cover: album.cover_medium
         });
       });
       const l = finalResults.length;
@@ -50,7 +51,11 @@ suggestions = () => {
             c += " result-last";
           }
           const e = document.createElement("li");
-          e.innerHTML = `<li class="${c}">${result.display}</li>`;
+          e.innerHTML = `
+          <li class="${c}">
+            <img src="${result.cover}"> ${result.title} - ${result.artist}
+          </li>
+          `;
           results.appendChild(e);
           e.addEventListener("click", () => {
             songLyrics(result);
@@ -65,17 +70,22 @@ suggestions = () => {
     });
 };
 
-songLyrics = ({ artist, title, display }) => {
+songLyrics = song => {
   removeResults();
   lyricsDiv.innerHTML = "Loading...";
-  fetch(`${apiUrl}/v1/${artist}/${title}`)
+  fetch(`${apiUrl}/v1/${song.artist}/${song.title}`)
     .then(response => response.json())
     .then(({ lyrics }) => {
-      let html = `<h3 class="lyrics-title">${display}</h3>`;
-      html += `<div id="thelyrics" class="thelyrics">${lyrics.replace(
-        /\n/g,
-        "<br />"
-      )}</div>`;
+      let html = `
+      <img src="${song.cover}">
+      <h3 class="lyrics-title">
+        ${song.title} - ${song.artist} (${song.album})
+      </h3>`;
+      html += `
+      <div id="thelyrics" class="thelyrics">
+        ${lyrics.replace(/\n/g, "<br />")}
+      </div>
+      `;
       lyricsDiv.innerHTML = html;
     })
     .catch(error => {
