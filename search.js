@@ -53,7 +53,7 @@ suggestions = () => {
           const e = document.createElement("li");
           e.innerHTML = `
           <li class="${c}">
-            <img src="${result.cover}"> ${result.title} - ${result.artist}
+            <img src="${result.cover}" class="cover"> ${result.title} - ${result.artist}
           </li>
           `;
           results.appendChild(e);
@@ -70,16 +70,16 @@ suggestions = () => {
     });
 };
 
-songLyrics = song => {
+songLyrics = ({ artist, title, cover, album }) => {
   removeResults();
   lyricsDiv.innerHTML = "Loading...";
-  fetch(`${apiUrl}/v1/${song.artist}/${song.title}`)
+  fetch(`${apiUrl}/v1/${artist}/${title}`)
     .then(response => response.json())
     .then(({ lyrics }) => {
       let html = `
-      <img src="${song.cover}">
+      <img src="${cover}" class="cover">
       <h3 class="lyrics-title">
-        ${song.title} - ${song.artist} (${song.album})
+        ${title} - ${artist} (${album})
       </h3>`;
       html += `
       <div id="thelyrics" class="thelyrics">

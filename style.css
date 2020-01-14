@@ -166,6 +166,12 @@ a:hover {
 .lyrics-title {
 }
 
+.cover {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .credits {
   display: flex;
   align-items: center;
