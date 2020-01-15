@@ -15,32 +15,31 @@
   </head>
   <body>
     <div class="container">
-      <div class="header">
+      <div class="search">
+        <input
+          type="search"
+          name="song"
+          class="search-song"
+          autofocus="autofocus"
+          placeholder="type the song you want the lyrics"
+          id="search-input"
+        />
+      </div>
+      <div class="suggestions">
+        <ul class="results" id="results"></ul>
+        <div class="fade left"></div>
+        <div class="fade right"></div>
+      </div>
+      <div class="lyrics" id="lyrics"></div>
+      <div class="credits">
         <div class="title">
           <h1 class="title-name">
             <a href="https://ludacris.netlify.com">ludacris</a>
           </h1>
-          <a target="_blank" href="https://github.com/liyasthomas/ludacris"
-            >GitHub</a
-          >
+          <a target="_blank" href="https://github.com/liyasthomas/ludacris">
+            GitHub
+          </a>
         </div>
-        <div class="search">
-          <input
-            type="search"
-            name="song"
-            class="search-song"
-            autofocus="autofocus"
-            placeholder="type the song you want the lyrics"
-            id="search-input"
-          />
-        </div>
-      </div>
-      <ul class="results" id="results"></ul>
-      <div class="lyrics" id="lyrics"></div>
-      <div class="credits">
-        <a target="_blank" href="https://github.com/liyasthomas"
-          >made by Liyas Thomas</a
-        >
       </div>
     </div>
     <script

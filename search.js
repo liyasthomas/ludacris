@@ -51,10 +51,13 @@ suggestions = () => {
             c += " result-last";
           }
           const e = document.createElement("li");
+          e.classList.add("flex");
           e.innerHTML = `
-          <li class="${c}">
-            <img src="${result.cover}" class="cover"> ${result.title} - ${result.artist}
-          </li>
+          <div class="${c}">
+            <img src="${result.cover}" class="cover">
+            <div class="title">${result.title}</div>
+            <div class="artist">${result.artist}</div>
+          </div>
           `;
           results.appendChild(e);
           e.addEventListener("click", () => {
@@ -77,7 +80,7 @@ songLyrics = ({ artist, title, cover, album }) => {
     .then(response => response.json())
     .then(({ lyrics }) => {
       let html = `
-      <img src="${cover}" class="cover">
+      <img src="${cover}" class="cover-large">
       <h3 class="lyrics-title">
         ${title} - ${artist} (${album})
       </h3>`;
