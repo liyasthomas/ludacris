@@ -24,7 +24,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b2b2b2;
+  background: #aaa;
 }
 
 ::placeholder {
@@ -100,6 +100,7 @@ a:hover {
   display: flex;
   flex: 1;
   flex-direction: column;
+  z-index: 1;
 }
 
 .search-song {
@@ -196,6 +197,9 @@ a:hover {
   box-shadow: 0 0 16px -2px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   margin-bottom: 32px;
+  background-color: #aaa;
+  min-height: 250px;
+  min-width: 250px;
 }
 
 .cover-large {
@@ -224,9 +228,4 @@ a:hover {
   justify-content: space-between;
   font-weight: 800;
   padding: 16px 32px;
-}
-
-.credits a {
-  color: #aaa;
-  padding: 8px 0;
 }
