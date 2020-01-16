@@ -54,6 +54,7 @@ suggestions = () => {
           e.classList.add("flex");
           e.innerHTML = `
           <div class="${c}">
+            <div class="background-image" style="background-image: url('${result.cover}')"></div>
             <img src="${result.cover}" class="cover">
             <div class="title">${result.title}</div>
             <div class="artist">${result.artist}</div>
