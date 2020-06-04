@@ -22,7 +22,7 @@ suggestions = () => {
   }
   results.innerHTML = "Loading...";
   fetch(`${apiUrl}/suggest/${term}`)
-    .then(response => response.json())
+    .then((response) => response.json())
     .then(({ data }) => {
       removeResults();
       const finalResults = [];
@@ -40,7 +40,7 @@ suggestions = () => {
           title,
           artist: artist.name,
           album: album.title,
-          cover: album.cover_medium
+          cover: album.cover_medium,
         });
       });
       const l = finalResults.length;
@@ -69,7 +69,7 @@ suggestions = () => {
         results.innerHTML = "No results";
       }
     })
-    .catch(error => {
+    .catch((error) => {
       results.innerHTML = error;
     });
 };
@@ -78,7 +78,7 @@ songLyrics = ({ artist, title, cover, album }) => {
   removeResults();
   lyricsDiv.innerHTML = "Loading...";
   fetch(`${apiUrl}/v1/${artist}/${title}`)
-    .then(response => response.json())
+    .then((response) => response.json())
     .then(({ lyrics }) => {
       let html = `
       <img src="${cover}" class="cover-large">
@@ -92,7 +92,7 @@ songLyrics = ({ artist, title, cover, album }) => {
       `;
       lyricsDiv.innerHTML = html;
     })
-    .catch(error => {
+    .catch((error) => {
       lyricsDiv.innerHTML = "Not found";
     });
 };
